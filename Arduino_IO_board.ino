@@ -65,7 +65,7 @@ void cmd_interpurate(int C_len, char * C_str)
               Serial.print("#<DEBUG>--Turn_ON/OFF_Debug_mode#\n");
               Serial.print("#<DEBUG_ON>--Turn_ON/OFF_Debug_mode#\n");
               Serial.print("#<DEBUG_OFF>--Turn_ON/OFF_Debug_mode#\n");
-              Serial.print("#<DEBUG_STSTUS>--Return_DEBUG_STATUS#\n");
+              Serial.print("#<DEBUG_STATUS>--Return_DEBUG_STATUS#\n");
               Serial.print("#<ALARM_ON>--Turn_ON_Alarm#\n");
               Serial.print("#<ALARM_OFF>--Turn_OFF_Alarm#\n");
               Serial.print("#EACH COMMAND LIVES IN '<>'#");

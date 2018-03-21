@@ -15,8 +15,6 @@ from time import sleep
 
 Debug=False
 
-DBG_str='#Please USE the debug mode to test because the ARDUINO needs a minor UPDATE before it works with this program##This is the first exception MSG#<$T%56.638$H%20.138$>#Yuxuan Zhang Codes at deep night#'
-
 err_file_route=''
 err_table=''
 err_level=['MESSAGE','EXCEPTION','ERROR(L1)','ERROR(L2)','ERROR(L3)','BREAKDOWN']
@@ -74,7 +72,7 @@ def report_MSG(error_level,error_string):
       err_out = open(err_file_route, 'a')
     except:
       err_out = open(err_file_route, 'w')
-    err_out.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+' '+err_level[error_level]+' '+error_string+'\n')
+    err_out.write(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+' '+err_level[error_level-1]+' '+error_string+'\n')
     err_out.close()
   #if(err_table!=''):
     #not an online feature 
@@ -109,6 +107,18 @@ def fetch_data(Port, baudrate, time_out, timestamp, Host, User, Password, Databa
       sys.exit(1)
   if Debug: print('Debug_MSG >> Serial Connection Normal')
   #Fetch RAW
+  if Debug:
+    RAW_Data_str=''
+    timeout_count=0
+    while(RAW_Data_str=='' and timeout_count<10):
+      serial_port.writelines("<DEBUG_ON>")
+      time.sleep(0.1)
+      RAW_Data_str=serial_port.readline()
+      timeout_count+=1
+    while(RAW_Data_str!='' and RAW_Data_str.count('#')>=2):
+      RAW_Data_str=RAW_Data_str[RAW_Data_str.find('#')+1:]
+      report_MSG(1,"From_ARDUINO_Board:"+RAW_Data_str[:RAW_Data_str.find('#')])
+      RAW_Data_str=RAW_Data_str[RAW_Data_str.find('#'):]
   RAW_Data_str=''
   timeout_count=0
   while(RAW_Data_str=='' and timeout_count<10):
@@ -118,9 +128,9 @@ def fetch_data(Port, baudrate, time_out, timestamp, Host, User, Password, Databa
     timeout_count+=1  
   #Pick out error messages
   if Debug:
-    print(RAW_Data_str)
-    print('Now replaced by: '+DBG_str)
-    RAW_Data_str=DBG_str
+    print("Arduino_MSG >> "+RAW_Data_str)
+    #print('Now replaced by: '+DBG_str)
+    #RAW_Data_str=DBG_str
   if RAW_Data_str.count('#')%2==1:
     report_MSG(2,'INVALID_Serial_INPUT:'+RAW_Data_str)
     sys.exit(1)
@@ -162,6 +172,14 @@ def fetch_data(Port, baudrate, time_out, timestamp, Host, User, Password, Databa
           db.commit()
         except:
           report_MSG(2,'Data_Update_Failed_USING: '+Data_CMD+' (PROCEED)')
+  if Debug:
+    RAW_Data_str=''
+    timeout_count=0
+    while(RAW_Data_str=='' and timeout_count<10):
+      serial_port.writelines("<DEBUG_OFF>")
+      time.sleep(0.1)
+      RAW_Data_str=serial_port.readline()
+      timeout_count+=1
     
 if __name__ == '__main__':
     

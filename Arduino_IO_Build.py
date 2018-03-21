@@ -88,8 +88,8 @@ def fetch_data(Port, baudrate, time_out, timestamp, Host, User, Password, Databa
     sys.exit(1)
   try:
     cursor = db.cursor()
-    cursor.execute("use ATLAS_Main")
-    INSERT_CMD="INSERT INTO ARDUINO_IO (TS,ECC) VALUES("+'%.2f' % timestamp+",0b00000000)"
+    cursor.execute("use "+Database)
+    INSERT_CMD="INSERT INTO "+Table+" (TS,ECC) VALUES("+'%.2f' % timestamp+",0b00000000)"
     if(Debug): print('MySQL_CMD >> '+INSERT_CMD)
     cursor.execute(INSERT_CMD)
     db.commit()
@@ -164,7 +164,7 @@ def fetch_data(Port, baudrate, time_out, timestamp, Host, User, Password, Databa
       if(DATA.table_name==''):
         report_MSG(2,'INVALID_Data_TAG: '+Current_Data_str[:Current_Data_str.find('%')]+' (PROCEED)')
       else:
-        Data_CMD="UPDATE ARDUINO_IO SET "+DATA.table_name+"="+'%.4f' % DATA.val+" WHERE TS=" + '%.2f' % timestamp + ';'
+        Data_CMD="UPDATE "+Table+" SET "+DATA.table_name+"="+'%.4f' % DATA.val+" WHERE TS=" + '%.2f' % timestamp + ';'
         if Debug:
           print("MySQL_CMD >> "+Data_CMD)
         try:

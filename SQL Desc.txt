@@ -1,0 +1,26 @@
+INSERT INTO user (host, user, authentication_string, select_priv, insert_priv, update_priv) VALUES ('localhost','operator',PASSWORD('abc123'), 'Y', 'Y', 'Y');
+
+GRANT SELECT,INSERT,UPDATE,DELETE ON ATLAS_Main.* TO 'ArduinoIO'@'localhost' IDENTIFIED BY 'pxKr_AIO' WITH GRANT OPTION;
+FLUSH Privileges;
+
+
+mysql> 
+CREATE TABLE ARDUINO_IO (
+TS DOUBLE NOT NULL,
+ECC TINYINT default 0,
+Env_Temp double default 0,
+Env_Humidity double default 0,
+Last_Update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+PRIMARY KEY (TS)
+);
+
+mariadb> 
+CREATE TABLE ARDUINO_IO (
+TS DOUBLE NOT NULL,
+ECC TINYINT default 0,
+Env_Temp double default 0,
+Env_Humidity double default 0,
+Last_Update TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+PRIMARY KEY (TS)
+);
+

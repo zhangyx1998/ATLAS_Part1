@@ -202,7 +202,7 @@ if __name__ == '__main__':
   Debug=args.Debug
   err_file_route=args.ErrorFile
   err_table=args.ErrorTable
-  if args.timestamp==0: args.timestamp=time.time()
+  if args.timestamp==0: args.timestamp=(int)(time.time()*1000)
   fetch_data(args.port, args.baudrate, float(args.timeout), args.timestamp, args.host, args.user, args.password, args.Database, args.Table, args.InputExpect)
   sys.exit(0)
   

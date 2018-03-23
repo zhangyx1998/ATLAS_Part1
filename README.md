@@ -16,4 +16,4 @@ put in ":wq", "Enter"
 ```
 All Done!
 
-Notice: all source codes should be put into the same folder if you want to launch it normally.
+Notice: all source codes should be put into the same folder if you want to launch it normally. And if you use different ports for arduino, please change the settings at config.sh

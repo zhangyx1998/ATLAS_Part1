@@ -1,3 +1,6 @@
+//This code is compatible to work with Version V1.01 System.
+//Author Yuxuan Zhang
+//MARCH 2018
 #include <Wire.h> 
 
 int debug_flag=0;

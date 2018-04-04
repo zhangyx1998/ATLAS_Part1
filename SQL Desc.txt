@@ -1,8 +1,14 @@
+--------------------------------------------------------------------------------
+This file works with visions up to V1.01
+--------------------------------------------------------------------------------
+
 INSERT INTO user (host, user, authentication_string, select_priv, insert_priv, update_priv) VALUES ('localhost','operator',PASSWORD('abc123'), 'Y', 'Y', 'Y');
 
 GRANT SELECT,INSERT,UPDATE,DELETE ON ATLAS_Main.* TO 'ArduinoIO'@'localhost' IDENTIFIED BY 'pxKr_AIO' WITH GRANT OPTION;
 FLUSH Privileges;
 
+GRANT SELECT,INSERT,UPDATE,DELETE ON ATLAS_Main.Log TO 'Log_Upd'@'localhost' IDENTIFIED BY 'pxKr_LOG' WITH GRANT OPTION;
+FLUSH Privileges;
 
 mysql> 
 CREATE TABLE ARDUINO_IO (
@@ -17,10 +23,27 @@ PRIMARY KEY (TS)
 mariadb> 
 CREATE TABLE ARDUINO_IO (
 TS DOUBLE NOT NULL,
-ECC TINYINT default 0,
+ECC INT default 0,
 Env_Temp double default 0,
 Env_Humidity double default 0,
 Last_Update TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 PRIMARY KEY (TS)
 );
 
+mariadb> 
+ALTER TABLE ARDUINO_IO MODIFY ECC INT default 0;
+
+mariadb> 
+CREATE TABLE Log (
+ID INT NOT NULL AUTO_INCREMENT,
+MSG_Source VARCHAR(20) default 'Unknown' NOT NULL,
+MSG_Type VARCHAR(20) default 'Unknown' NOT NULL,
+Priority INT default 0 NOT NULL,
+ERR_ID INT default 0 NOT NULL,
+MSG_Index VARCHAR(200),
+Stamp INT default 0 NOT NULL,
+Date_Time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+PRIMARY KEY (ID)
+);
+INSERT INTO Log (MSG_Source,MSG_Type,Priority,ERR_ID,MSG_Index,Stamp) VALUES('VERSION','Current_Version',0,0,'V1.00',0);
+#This Command Initialiates the "version" record. This record will be continuously updated upon software upgrade.

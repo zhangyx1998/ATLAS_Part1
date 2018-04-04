@@ -58,7 +58,7 @@ V1.01 NOTE
 			If the message contains an error or a command from web server that needs to be taken care of, the value will be "1" until it is taken care of by control service or manually. (The control service can therefore search for logs whose stamp is 1, and take action on it, and finally change it back to 0)
 		Date_Time:
 			Auto_Update, intended for manual check.
-
+```
 mysql> desc Log;
 +------------+--------------+------+-----+-------------------+-----------------------------+
 | Field      | Type         | Null | Key | Default           | Extra                       |
@@ -71,7 +71,7 @@ mysql> desc Log;
 | Stamp      | int(11)      | NO   |     | 0                 |                             |
 | Date_Time  | timestamp    | NO   | PRI | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
 +------------+--------------+------+-----+-------------------+-----------------------------+
-
+```
 3.Version Control is now available:
 	By introducing this feature, we do not need to delete the old version everytime we upgrade it. Source code of all versions are stored in the folder, and if we want to roll back, we need only to change the key hardcoded in config.sh. Upon the first running of a new version, a log will be automatically inserted to the log table, so we can keep track on version changes.
 
